@@ -2,33 +2,29 @@
 
 ## 📌 Project Overview
 
-This project analyzes delivery logistics data to evaluate delivery performance, identify operational bottlenecks, and understand the factors contributing to delivery delays.
+This project analyzes delivery logistics data to evaluate delivery performance, identify operational bottlenecks, understand factors contributing to delivery delays, and build predictive regression models.
 
-The project uses **Python, SQL, Machine Learning, and Power BI** to transform raw logistics data into business insights, predictive models, and an interactive dashboard.
+The project follows an end-to-end analytics workflow using **Python, SQL, Machine Learning, and Power BI**.
 
 ## 🎯 Business Objective
 
-The main objective is to understand:
-
-- Overall delivery performance
-- Route type performance
-- Source center performance
-- Source-to-destination route performance
-- Day-of-week delivery patterns
-- Time-of-day delivery patterns
-- Relationship between distance and delivery time
-- Distribution and severity of delivery delays
-- Predictive performance of regression models
+- Evaluate overall delivery performance
+- Compare route types
+- Identify high-delay source centers and routes
+- Analyze day-of-week and time-of-day patterns
+- Study the relationship between distance and delivery time
+- Analyze delay severity and distribution
+- Build and evaluate regression models
 
 ## 📊 Dataset
-
-The dataset contains delivery-level logistics information including trip information, route type, source and destination centers, actual and expected/OSRM delivery time, actual and OSRM distance, cutoff information, segment-level delivery metrics, and delivery delay.
-
-### Dataset Size
 
 - **Records:** 144,867
 - **Columns:** 28
 - **Unique Trips:** 14,817
+
+The dataset includes trip information, route type, source/destination centers, actual and OSRM delivery times, distances, cutoff information, segment-level metrics, and delivery delay.
+
+> The original raw dataset is excluded from GitHub using `.gitignore` because of its size.
 
 ## 🛠️ Tools & Technologies
 
@@ -49,7 +45,7 @@ The dataset contains delivery-level logistics information including trip informa
 - Model Evaluation
 - Feature Importance
 
-### Visualization
+### Visualization & BI
 - Matplotlib
 - Seaborn
 - Power BI
@@ -61,7 +57,7 @@ The dataset contains delivery-level logistics information including trip informa
 - Git
 - GitHub
 
-# 🔄 Project Workflow
+## 🔄 Project Workflow
 
 ```text
 Raw Dataset
@@ -85,18 +81,31 @@ Power BI Dashboard
 Executive Summary
 ```
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```text
 Delivery/
 │
 ├── dashboard/
-│   └── Delivery_Logistics_Performance_Analysis.pbix
+│   ├── Delivery_Logistics_Performance_Analysis.pbix
+│   └── screenshots/
+│       └── Power BI dashboard screenshots
+│
+├── outputVisuals/
+│   ├── Actual Time Vs OSRM Estimated Distance.png
+│   ├── Actual time Vs OSRM Estimated Time.png
+│   ├── Average Actual time by route_type.png
+│   ├── Average TIme deviation By route_type.png
+│   ├── Source center volume vs time deviation.png
+│   ├── Top 15 feature importances- final random forest.png
+│   ├── cutoff factor vs Time deviation.png
+│   ├── distribution of actual delivery time.png
+│   ├── output.png
+│   └── time Deviation By cutoff Status.png
 │
 ├── data/
 │   ├── raw/
 │   │   └── delhivery_data.csv
-│   │
 │   └── processed/
 │       └── delivery_cleaned.csv
 │
@@ -122,48 +131,44 @@ Delivery/
 └── requirements.txt
 ```
 
-# 🧹 Data Preparation
+## 🧹 Data Preparation
 
 The data preparation process included:
 
-1. Understanding the dataset structure.
-2. Checking data types.
-3. Identifying missing values.
-4. Converting timestamp columns into datetime format.
-5. Cleaning and validating the dataset.
-6. Creating delivery delay metrics.
-7. Creating route-level features.
-8. Creating day-of-week features.
-9. Creating start-hour features.
-10. Preparing the cleaned dataset for business analysis and modeling.
+1. Understanding the dataset structure
+2. Checking data types
+3. Identifying missing values
+4. Converting timestamp columns
+5. Cleaning and validating the dataset
+6. Creating delivery delay metrics
+7. Creating route-level features
+8. Creating day-of-week features
+9. Creating start-hour features
+10. Preparing the dataset for business analysis and modeling
 
-Final analytical dataset:
+Final analytical dataset: **144,867 records × 28 columns**
 
-**144,867 records × 28 columns**
+## 📈 Business Analysis
 
-# 📈 Business Analysis
+### 1. Route Type Performance
 
-## 1. Route Type Performance
-
-Delivery performance was compared between **Carting** and **FTL** using average actual time, expected time, delay, and delay percentage.
+Delivery performance was compared between **Carting** and **FTL** using actual time, expected time, delay, and delay percentage.
 
 **Key insight:** FTL operations showed substantially higher absolute average delays than Carting.
 
-## 2. Source Center Performance
+### 2. Source Center Performance
 
-Delivery performance was analyzed across source centers to identify locations associated with high delays.
+Source centers were compared to identify locations associated with high delivery delays.
 
 **Key insight:** Several source centers showed exceptionally high average delays, indicating potential hub-level operational bottlenecks.
 
-## 3. Source → Destination Route Performance
+### 3. Source → Destination Route Performance
 
-Individual source-to-destination routes were analyzed using records, unique trips, average actual time, average expected time, average delay, and delay percentage.
+Individual source-to-destination routes were analyzed using records, unique trips, actual time, expected time, delay, and delay percentage.
 
 **Key insight:** Several routes showed extremely high average delays, with the worst-performing routes exceeding **800 minutes** of average delay.
 
-## 4. Day-of-Week Performance
-
-Delivery performance was compared across all days of the week.
+### 4. Day-of-Week Performance
 
 | Day | Average Delay (min) |
 |---|---:|
@@ -175,11 +180,9 @@ Delivery performance was compared across all days of the week.
 | Saturday | 200.31 |
 | Sunday | 207.45 |
 
-**Key insight:** Delay varies across the week, with Wednesday showing the highest average delay and Tuesday the lowest.
+**Key insight:** Wednesday had the highest average delay, while Tuesday had the lowest.
 
-## 5. Time-of-Day Performance
-
-Delivery delays were analyzed according to the start hour.
+### 5. Time-of-Day Performance
 
 Some of the highest average delays occurred around:
 
@@ -189,9 +192,7 @@ Some of the highest average delays occurred around:
 
 **Key insight:** Certain operating hours experience substantially higher delays.
 
-## 6. Distance vs Delivery Time
-
-The relationship between distance and delivery time was analyzed using descriptive statistics, correlation analysis, and a scatter plot.
+### 6. Distance vs Delivery Time
 
 The correlation between actual distance and actual delivery time was:
 
@@ -199,9 +200,7 @@ The correlation between actual distance and actual delivery time was:
 
 **Key insight:** Longer delivery distances are strongly associated with longer actual delivery times.
 
-## 7. Delay Distribution
-
-The distribution and severity of delivery delays were analyzed using mean, quartiles, IQR, extreme-delay threshold, and distribution visualization.
+### 7. Delay Distribution
 
 | Metric | Value |
 |---|---:|
@@ -215,11 +214,9 @@ The distribution and severity of delivery delays were analyzed using mean, quart
 
 **Key insight:** Delivery delays have a strongly right-skewed distribution with a significant long tail of severe delays.
 
-# 🤖 Machine Learning
+## 🤖 Machine Learning
 
 A supervised regression approach was used to model delivery-related performance from engineered logistics features.
-
-## Models Used
 
 ### Baseline Linear Regression
 
@@ -239,7 +236,7 @@ A supervised regression approach was used to model delivery-related performance 
 - **RMSE:** 98.29
 - **R²:** 0.9748
 
-## Model Comparison
+### Model Comparison
 
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
@@ -247,30 +244,50 @@ A supervised regression approach was used to model delivery-related performance 
 | Leakage-Safe Random Forest | 41.76 | 98.29 | 0.9748 |
 | Random Forest | 28.97 | 74.78 | 0.9854 |
 
-Lower MAE and RMSE indicate better prediction accuracy, while higher R² indicates that the model explains more variance in the target.
+**Result:** Standard Random Forest achieved the strongest predictive performance among the evaluated models, while the leakage-safe Random Forest also demonstrated strong performance under a more conservative evaluation setup.
 
-**Result:** The standard Random Forest achieved the strongest predictive performance among the evaluated models. The leakage-safe Random Forest also demonstrated strong performance under a more conservative evaluation setup.
+### Feature Engineering
 
-## Feature Engineering
+Engineered features represented:
 
-Features were engineered from the logistics data to represent delivery and operational characteristics, including distance, route information, timing-related variables, and other available operational factors.
+- Distance-related variables
+- Route information
+- Timing-related variables
+- Cutoff-related variables
+- Operational delivery metrics
 
-## Feature Importance
+### Feature Importance
 
-Feature importance was analyzed using the Random Forest model to identify variables contributing most strongly to predictions.
+Random Forest feature importance was analyzed to identify variables contributing most strongly to model predictions.
 
-# 🗄️ SQL Analysis
+## 📊 Visual Analysis
 
-SQL was used for database setup, data loading, business queries, and reusable analytical views.
+Python-generated visualizations are stored in `outputVisuals/`.
 
-The SQL component includes:
+Key visuals include:
+
+- Actual Time vs OSRM Estimated Distance
+- Actual Time vs OSRM Estimated Time
+- Average Actual Time by Route Type
+- Average Time Deviation by Route Type
+- Source Center Volume vs Time Deviation
+- Cutoff Factor vs Time Deviation
+- Distribution of Actual Delivery Time
+- Time Deviation by Cutoff Status
+- Top 15 Random Forest Feature Importances
+
+## 🗄️ SQL Analysis
+
+SQL was used for:
 
 - Database schema creation
 - Data loading
 - Business analysis queries
-- Analytical views
+- Reusable analytical views
 
-# 📊 Overall Performance KPIs
+SQL files are available in the `sql/` directory.
+
+## 📊 Overall Performance KPIs
 
 | KPI | Value |
 |---|---:|
@@ -283,7 +300,7 @@ The SQL component includes:
 | Delayed Records Percentage | 97.84% |
 | Extreme Delay Percentage | 11.48% |
 
-# 📊 Power BI Dashboard
+## 📊 Power BI Dashboard
 
 The interactive Power BI dashboard contains **9 pages**:
 
@@ -297,9 +314,19 @@ The interactive Power BI dashboard contains **9 pages**:
 8. Delay Distribution
 9. Executive Summary
 
-The dashboard includes KPI cards, route comparisons, time-based analysis, distance-time analysis, delay distribution, and an executive summary.
+The Power BI file is available at:
 
-# 💡 Key Business Insights
+```text
+dashboard/Delivery_Logistics_Performance_Analysis.pbix
+```
+
+Dashboard screenshots are stored in:
+
+```text
+dashboard/screenshots/
+```
+
+## 💡 Key Business Insights
 
 1. **High Overall Delay:** 97.84% of delivery records are delayed.
 2. **Significant Average Delay:** Average actual delivery time is 416.93 minutes compared with an average expected time of 213.87 minutes.
@@ -310,19 +337,17 @@ The dashboard includes KPI cards, route comparisons, time-based analysis, distan
 7. **Distance-Time Relationship:** Actual distance and actual delivery time have a very strong positive correlation of approximately 0.979.
 8. **Extreme Delays:** 11.48% of records fall into the extreme-delay category.
 
-# 🎯 Business Recommendations
-
-Based on the analysis:
+## 🎯 Business Recommendations
 
 - Investigate high-delay source centers for potential hub-level bottlenecks.
 - Prioritize the worst-performing source-to-destination routes for operational review.
-- Investigate the causes of high absolute delays in FTL operations.
+- Investigate causes of high absolute delays in FTL operations.
 - Review staffing, vehicle availability, and dispatch processes during high-delay hours.
 - Consider distance when establishing realistic delivery-time expectations.
 - Monitor extreme-delay trips separately from normal delays.
 - Track average delay, delayed-record percentage, and extreme-delay percentage as ongoing operational KPIs.
 
-# 🎯 Project Outcome
+## 🎯 Project Outcome
 
 The project demonstrates an end-to-end analytics workflow:
 
